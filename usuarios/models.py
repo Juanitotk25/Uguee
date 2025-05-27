@@ -12,6 +12,7 @@ class Usuario(models.Model):
     correo = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50)
     instid = models.ForeignKey(Institucion, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False, help_text="¿Ha sido aprobado por la institución?")
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"

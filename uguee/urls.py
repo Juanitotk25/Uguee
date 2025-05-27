@@ -14,21 +14,36 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# uguee/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 from .views import home
 from django.conf import settings
 from django.conf.urls.static import static
 
+# JWT views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
-    path('', home),
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
+
+    # API endpoints
     path('api/instituciones/', include('instituciones.urls')),
-    path('api/usuarios/', include('usuarios.urls')),
-    path('api/vehiculos/', include('vehiculos.urls')),
-    path('api/viajes/', include('viajes.urls')),
+    path('api/usuarios/',      include('usuarios.urls')),
+    path('api/vehiculos/',     include('vehiculos.urls')),
+    path('api/viajes/',        include('viajes.urls')),
+
+    # JWT authentication endpoints
+    path('api/token/',         TokenObtainPairView.as_view(),   name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(),      name='token_refresh'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

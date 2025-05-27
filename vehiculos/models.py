@@ -11,6 +11,7 @@ class Vehiculo(models.Model):
     marca = models.CharField(max_length=50)
     tipo = models.CharField(max_length=50)
     uid = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False, help_text="¿Vehículo aprobado por la institución?")
 
     def __str__(self):
         return self.placa
